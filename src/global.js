@@ -19,6 +19,8 @@ export const GlobalToolBar = () => {
             <Link to = "/InterfaceDemo/storage">Storage</Link>
             &nbsp;|&nbsp;
             <Link to = "/InterfaceDemo/history">History</Link>
+            &nbsp;|&nbsp;
+            <Link to = "/InterfaceDemo/matching">Chess Game</Link>
         </div>
     )
 }
