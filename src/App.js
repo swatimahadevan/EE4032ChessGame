@@ -1,4 +1,4 @@
-import {Routes, Route} from "react-router-dom";
+import {BrowserRouter, Routes, Route} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
 import {useState} from 'react';
 import {ethers} from 'ethers';
@@ -235,7 +235,7 @@ export default function App() {
 
 
     return (
-        // <BrowserRouter>
+        <BrowserRouter>
             <div className="App">
                 <Routes>
                     <Route path = "/InterfaceDemo" element = {<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />}></Route>
@@ -246,6 +246,6 @@ export default function App() {
                     <Route path = "/InterfaceDemo/matching" element = {<Matching/>}></Route>
                 </Routes>
             </div>
-        // </BrowserRouter>
+         </BrowserRouter> 
     );
 }
