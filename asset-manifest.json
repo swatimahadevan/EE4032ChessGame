@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/EE4032ChessGame/static/css/main.dd2dda80.css",
-    "main.js": "/EE4032ChessGame/static/js/main.3f57f8b1.js",
+    "main.css": "/EE4032ChessGame/static/css/main.d1a79f4d.css",
+    "main.js": "/EE4032ChessGame/static/js/main.cf45fa78.js",
     "static/js/787.579986d4.chunk.js": "/EE4032ChessGame/static/js/787.579986d4.chunk.js",
     "static/media/bgpic.jpg": "/EE4032ChessGame/static/media/bgpic.4c406bbef1c5783a43e5.jpg",
     "static/media/ches_bgpic.jpg": "/EE4032ChessGame/static/media/ches_bgpic.6ac101e8fff6f6c7f1dd.jpg",
     "static/media/METAMASK.png": "/EE4032ChessGame/static/media/METAMASK.b52147f5d62d57855c5e.png",
     "static/media/logo.svg": "/EE4032ChessGame/static/media/logo.6ce24c58023cc2f8fd88fe9d219db6c6.svg",
     "index.html": "/EE4032ChessGame/index.html",
-    "main.dd2dda80.css.map": "/EE4032ChessGame/static/css/main.dd2dda80.css.map",
-    "main.3f57f8b1.js.map": "/EE4032ChessGame/static/js/main.3f57f8b1.js.map",
+    "main.d1a79f4d.css.map": "/EE4032ChessGame/static/css/main.d1a79f4d.css.map",
+    "main.cf45fa78.js.map": "/EE4032ChessGame/static/js/main.cf45fa78.js.map",
     "787.579986d4.chunk.js.map": "/EE4032ChessGame/static/js/787.579986d4.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.dd2dda80.css",
-    "static/js/main.3f57f8b1.js"
+    "static/css/main.d1a79f4d.css",
+    "static/js/main.cf45fa78.js"
   ]
 }
