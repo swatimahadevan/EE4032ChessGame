@@ -1,5 +1,33 @@
 @import "../../global.css";
 
+
+.login p {
+  margin-top: -300px; /* Adjust the value as needed */
+}
+
+.login a {
+  display: block; /* Ensures the link is on a new line */
+  margin-top: 8px; /* Adjust the value as needed */
+}
+
+/* login.css */
+.login {
+  background-image: url('../../images/ches_bgpic.jpg');
+  background-size: cover; /* This will stretch the background image to cover the entire container */
+  /* Add other background properties like background-position, etc. if needed */
+  
+  text-align: center;
+  background-color: var(--BackgroundCovered);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: var(--MessageColorCovered);
+}
+
+
 .login{
     text-align: center;
     background-color: var(--BackgroundCovered);

@@ -3,57 +3,56 @@ import '../../global.css';
 import logo from '../../images/logo.svg';
 import Cookies from 'js-cookie';
 
-export default function Login(props){
+export default function Login(props) {
 
     const NoMetamask = () => {
         return (
             <div>
                 <p>
-                    No MetaMask detected. 
-                    <br></br>
-                    Please install&nbsp;
-                    <span className = "login-highlight">
-                        METAMASK 
+                    <span style={{ fontWeight: 'bold', color: 'black' }}>
+                        No MetaMask detected.
+                        <br></br>
+                        Please install&nbsp;
                     </span>
-                    &nbsp;to your browser to proceed. 
+                    <span className="login-highlight" style={{ fontWeight: 'bold', color: 'black' }}>
+                        METAMASK
+                    </span>
+                    <span style={{ fontWeight: 'bold', color: 'black' }}>
+                        &nbsp;to your browser to proceed.
+                    </span>
                 </p>
             </div>
         )
     }
 
     const LoginMetamask = () => {
+        const fancyFontStyle = {
+            fontFamily: 'Lobster, cursive',
+            fontWeight: 'bold',
+            color: 'black',
+            fontSize: '24px', // Adjust the font size as needed
+        };
+
         return (
             <div>
-                <p>
-                    Please log in with&nbsp;
-                    <span className = "login-highlight">
-                        METAMASK 
-                    </span>
-                    &nbsp;to proceed. 
+                <p style={fancyFontStyle}>
+                    <span style={{ fontWeight: 'bold', fontSize: '24px' }}>Crypto Chess&nbsp;</span>
                 </p>
-                <a className = "global-link" onClick = {props.connectTo}>
+                <a className="global-link" onClick={props.connectTo} style={fancyFontStyle}>
                     Click here to connect
                 </a>
             </div>
-        )
-    }
+        );
+    };
 
     return (
-        <div className = "login">
-            <img src = {logo} className = "login-logo" alt = "logo" />
+        <div className="login">
             <h2>
-                23-24 Sem 1 EE4032 <br/>
-                Project Interface Demo
-                <br/>
-                <span className = "login-author">
-                    Developed by: Yan Ge
-                </span>
+                {props.isHaveMetamask ?
+                    <LoginMetamask /> :
+                    <NoMetamask />
+                }
             </h2>
-            {
-                props.isHaveMetamask ?
-                <LoginMetamask /> :
-                <NoMetamask />
-            }
         </div>
     )
 }

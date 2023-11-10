@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {useState} from 'react';
 import {ethers} from 'ethers';
 import Web3 from "web3";
-
+import { extendTheme } from "@chakra-ui/react"
 import './App.css';
 import Login from "./components/login/login";
 import Profile from "./components/profile/profile";
@@ -12,6 +12,9 @@ import History from "./components/history/history";
 import Test from "./components/Test";
 import ChessBoard from "./components/chessboard/chessboard";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
+import { ChakraProvider } from '@chakra-ui/react';
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
 export default function App() {
     const [haveMetamask, setHaveMetamask] = useState(true);     // check if the browser has MetaMask installed. 
@@ -234,14 +237,15 @@ export default function App() {
 
 
     return (
+        <ChakraProvider>
+      <Navbar />
             <div className="App">
                 <Routes>
                     <Route path="/EE4032ChessGame/" element={<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />} />
                     <Route path = "/EE4032ChessGame/profile" element = {<ProfileDisplay/>}></Route>
-                    <Route path = "/EE4032ChessGame/storage" element = {<StorageDisplay/>}></Route>
-                    <Route path = "/EE4032ChessGame/history" element = {<HistoryDisplay/>}></Route>
                     <Route path = "/EE4032ChessGame/chessboard" element = {<ChessBoard/>}></Route>
                 </Routes>
             </div>
+            </ChakraProvider>
     );
 }
