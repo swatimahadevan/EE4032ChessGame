@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Chessboard from "chessboardjsx";
 import { Chess } from "chess.js";
+import { Navigate } from "react-router-dom";
 import "./chessboard.css"; // Import your CSS file
 
-const ChessBoard = () => {
+const ChessBoard = (props) => {
   const [chess] = useState(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   );

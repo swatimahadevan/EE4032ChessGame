@@ -15,6 +15,7 @@ import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 import { ChakraProvider } from '@chakra-ui/react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import Bidding from './components/bidding/bidding';
 
 export default function App() {
     const [haveMetamask, setHaveMetamask] = useState(true);     // check if the browser has MetaMask installed. 
@@ -243,6 +244,7 @@ export default function App() {
                 <Routes>
                     <Route path="/EE4032ChessGame/" element={<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />} />
                     <Route path = "/EE4032ChessGame/profile" element = {<ProfileDisplay/>}></Route>
+                    <Route path = "/EE4032ChessGame/bidding" element = {<Bidding/>}></Route>
                     <Route path = "/EE4032ChessGame/chessboard" element = {<ChessBoard/>}></Route>
                 </Routes>
             </div>

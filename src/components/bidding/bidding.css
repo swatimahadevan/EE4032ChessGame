@@ -1,0 +1,66 @@
+.chessboard-container {
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  input {
+    padding: 8px;
+    margin: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+
+  .error-text {
+    color: red;
+    margin-top: 8px;
+  }
+  /* bidding.css */
+.flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+  
+  .chessboard-container {
+    text-align: center;
+  }
+  
+  h2 {
+    color: #333;
+  }
+  
+  label {
+    display: block;
+    margin: 10px 0;
+  }
+  
+  input {
+    padding: 8px;
+    margin: 5px 0;
+    width: 200px;
+  }
+  
+  .error-text {
+    color: #d9534f; /* Bootstrap danger color */
+  }
+
+ 
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    input {
+      width: 80%;
+    }
+  
+    button {
+      width: 80%;
+    }
+  }
+  
