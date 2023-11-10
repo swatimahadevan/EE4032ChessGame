@@ -12,6 +12,8 @@ const ChessBoard = (props) => {
   const [selectedSquare, setSelectedSquare] = useState(null);
   const [hoveredSquare, setHoveredSquare] = useState(null);
   const [capturedPieces, setCapturedPieces] = useState({});
+  const [validMoves, setValidMoves] = useState([]);
+
   const [gameStatus, setGameStatus] = useState("");
   const [winner, setWinner] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
@@ -156,9 +158,9 @@ const ChessBoard = (props) => {
 
     if (moves.length > 0) {
       setSelectedSquare(square);
+      setValidMoves(moves); // Store valid moves in state
     }
   };
-
   const highlightSquare = (square) => {
     const validMoves = chess.moves({ square: square });
     const squaresToHighlight = validMoves.map((move) => move.to);

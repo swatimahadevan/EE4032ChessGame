@@ -16,10 +16,6 @@ export const GlobalToolBar = () => {
             &nbsp;|&nbsp;
             <Link to = "/EE4032ChessGame/profile">Profile</Link>
             &nbsp;|&nbsp;
-            <Link to = "/EE4032ChessGame/storage">Storage</Link>
-            &nbsp;|&nbsp;
-            <Link to = "/EE4032ChessGame/history">History</Link>
-            &nbsp;|&nbsp;
             <Link to = "/EE4032ChessGame/chessboard">Chess Game</Link>
         </div>
     )

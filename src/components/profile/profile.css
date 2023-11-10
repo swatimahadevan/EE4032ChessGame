@@ -1,66 +1,94 @@
+/* Import global styles */
 @import "../../global.css";
 
+/* CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+/* Existing styles */
 .profile-background {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh; /* Adjust the height as needed */
-  }
-  
-  .profile {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 50px; /* Adjust the margin-top as needed */
-  }
-  
-  .profile img {
-    margin-bottom: 0px; /* Adjust the margin-bottom for the logo */
-  }
-  
-  .profile-account {
-    text-align: center;
-    margin-top: 10px; /* Adjust the margin-top for the account details */
-  }
-  
-  .global-message {
-    font-weight: bold;
-  }
-
-.profile-background{
-    background-image: url("../../images/bgpic.jpg");
-    background-size: 100%;
-    background-position-x: center;
-
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    flex-direction: column;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Adjust the height as needed */
 }
 
-.profile{
-    
-    background-color: var(--BackgroundUncovered);
-    height: 27.5%;
-    width: 64%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.profile {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Set the height to 100% of the viewport height */
 }
 
-.profile-account{
-    font-size: 25px;
-    
-    height: 100%;
-    width: 70%;
-    text-align: left;
-    padding-left: 20px;
-    padding-right: 10px;
-    padding-bottom: 10px;
-    color: var(--MessageColorUncovered);
+.logo-and-details {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
+.logo-container {
+  width: 100px; /* Adjust the width as needed */
+  height: 100px; /* Adjust the height as needed */
+  display: flex;
+  align-items: center;
+}
+
+.logo-container img {
+  width: 100%;
+  height: auto;
+}
+
+.profile-account {
+  font-size: 25px;
+  height: 100%;
+  width: 70%;
+  text-align: left;
+  padding-left: 20px;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  color: var(--MessageColorUncovered);
+}
+
+.global-message {
+  font-weight: bold;
+}
+
+/* New styles */
+.profile-background {
+  background-image: url("../../images/bgpic.jpg");
+  background-size: 100%;
+  background-position-x: center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile {
+  background-color: var(--BackgroundUncovered);
+  height: 100%; /* Adjust the height as needed */
+  width: 100%; /* Adjust the width as needed */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

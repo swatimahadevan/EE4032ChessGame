@@ -7,9 +7,6 @@ import { extendTheme } from "@chakra-ui/react"
 import './App.css';
 import Login from "./components/login/login";
 import Profile from "./components/profile/profile";
-import Storage from "./components/storage/storage";
-import History from "./components/history/history";
-import Test from "./components/Test";
 import ChessBoard from "./components/chessboard/chessboard";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 import { ChakraProvider } from '@chakra-ui/react';
@@ -39,16 +36,6 @@ export default function App() {
     const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
     const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
 
-    // useEffect(() => {
-    //     const { ethereum } = window;
-    //     const checkMetamaskAvailability = async () => {
-    //         if (!ethereum) {
-    //             setHaveMetamask(false);
-    //         }
-    //         setHaveMetamask(true);
-    //     };
-    //     checkMetamaskAvailability();
-    // }, []);
 
 ////// connect to MetaMask. 
     const connectWallet = async () => {         // function that connect to METAMASK account, activated when clicking on 'connect'. 
@@ -93,112 +80,26 @@ export default function App() {
 
 ////// Contract Deployment. 
     // IMPORTANT: async / await is essential to get values instead of Promise. 
-    const storeData = async (inputVal) => {
-        const res = await contract.methods.set(inputVal).send({from: address});
+    const start = async () => {
+        const res = await contract.methods.start().call();
         return res;
     }
 
-    const getData = async () => {
+    const move = async () => {
         const res = await contract.methods.get().call();
         return res;
     }
 
-
-////// history recording. 
-    const RecordOverFlow = () => {
-        if (recordLen > maxRecordLen){
-            let outlierNum = recordLen - maxRecordLen;
-            setHistoryRecord(current => current.splice(1, outlierNum));
-            setRecordLen(maxRecordLen);
-        }
+    const getHistoryMoves = async () => {
+        const res = await contract.methods.get().call();
+        return res;
     }
 
-    const RecordPush = (opr, val, detail) => {
-        let stat = 1;
-        let cost = 0;
-        if (val.length === 0){
-            val = 'NA';
-            cost = 'NA';
-            stat = 0;
-        }
-        else{
-            if (opr === 'get'){
-                cost = 0;
-                stat = 1;
-            }
-            else{
-                if (detail === 'null'){
-                    setStoredPending(false);
-                    setStoredDone(true);
-                    console.log('Rejected');
-                    cost = 'NA';
-                    stat = 2;
-                }
-                else{
-                    setStoredDone(true);
-                    console.log('Done');
-                    console.log(detail);    // show the details of transaction. 
-                    cost = detail.gasUsed;
-                    stat = 1;
-                }
-            }
-        }
-
-        const newRecord = {
-            id: recordLen + 1, 
-            address: address, 
-            operation: opr, 
-            value: val, 
-            cost: cost, 
-            status: stat
-        };
-        if (recordLen === 0){
-            setHistoryRecord([newRecord, newRecord]);
-        }
-        else{
-            setHistoryRecord(current => [...current, newRecord]);
-        }
-        setRecordLen(recordLen + 1);
-
-        if (recordLen > maxRecordLen){
-            RecordOverFlow();
-        }
+    const ends = async () => {
+        const res = await contract.methods.get().call();
+        return res;
     }
 
-
-////// store and get value. 
-    const storedValUpdate = async () => {
-        const inputVal = document.getElementById('inputVal').value;
-        setStoredPending(false);
-        setStoredDone(false);
-
-        if (inputVal.length === 0) {
-            const detail = 'null';
-            RecordPush('store', inputVal, detail);
-        }
-        else {
-            setStoredPending(true);
-            setStoredVal(inputVal);
-            
-            try{
-                const detail = await storeData(inputVal);   // contract deployed. 
-                RecordPush('store', inputVal, detail);      // recorded. 
-            }
-            catch(err){
-                const detail = 'null';                      // no detail info. 
-                RecordPush('store', inputVal, detail);      // recorded. 
-            }
-        }
-    }
-
-    const showValUpdate = async () => {
-        const ans = await getData();
-        setStoredPending(false);
-        setStoredDone(false);
-
-        setShowVal(ans);
-        RecordPush('get', ans);
-    }
 
 
 ////// display functions. 
@@ -212,30 +113,6 @@ export default function App() {
             />
         )
     }
-
-    const StorageDisplay = () => {
-        return (
-            <Storage 
-                isConnected = {isConnected}
-                storeValHandle = {storedValUpdate} 
-                showValHandle = {showValUpdate} 
-                showVal = {showVal} 
-                storedPending = {storedPending}
-                storedDone = {storedDone}
-            />
-        )
-    }
-
-    const HistoryDisplay = () => {
-        return (
-            <History 
-                isConnected = {isConnected}
-                recordList = {historyRecord}
-                recordLen = {recordLen}
-            />
-        )
-    }
-
 
     return (
         <ChakraProvider>

@@ -1,3 +1,4 @@
+// Import necessary modules and styles
 import { Navigate } from "react-router-dom";
 import React, { useEffect } from "react";
 import "./profile.css";
@@ -6,6 +7,7 @@ import { GlobalToolBar } from "../../global";
 import METAMASK from '../../images/METAMASK.png';
 import Cookies from "js-cookie";
 
+// Profile component
 export default function Profile(props) {
   // useEffect to set the address in a cookie when the component is mounted
   useEffect(() => {
@@ -14,12 +16,15 @@ export default function Profile(props) {
     }
   }, [props.address]);
 
+  // ProfilePage component
   const ProfilePage = () => {
     return (
       <div className="profile-background">
         <div className="profile">
           <div className="logo-and-details">
-            <img src={METAMASK} alt="logo" height="100%" />
+            <div className="logo-container">
+              <img src={METAMASK} alt="logo" height="100%" />
+            </div>
             <div className="profile-account">
               <p>
                 <b>Profile details</b>
@@ -45,8 +50,9 @@ export default function Profile(props) {
     );
   };
 
+  // Render Profile component
   return (
-    <div>
+    <div className="center-container">
       {props.isConnected ? (
         <ProfilePage />
       ) : (
