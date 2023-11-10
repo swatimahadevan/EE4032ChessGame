@@ -22,6 +22,8 @@ export default function App() {
     const [isConnected, setIsConnected] = useState(false);      // check if is connected to MetaMask account. 
 
     const [storedPending, setStoredPending] = useState(false);        // check if a value is pending. 
+    
+    const [startedGame, setStartedGame] = useState(false);        // check if game has started
     const [storedDone, setStoredDone] = useState(false);        // check if a value is stored. 
     const [storedVal, setStoredVal] = useState(0);              // value that is stored right now. 
     const [showVal, setShowVal] = useState(0);                  // value that is showed on screen. 
@@ -78,28 +80,57 @@ export default function App() {
     }
 
 
+    ////// set start of game 
+    const setStartOfGame = async () => {
+
+        try{
+            const detail = await startGame();   // contract deployed. 
+            setStartedGame(true);
+        }
+        catch(error){
+            console.log(error);
+        }
+    }
+
 ////// Contract Deployment. 
     // IMPORTANT: async / await is essential to get values instead of Promise. 
-    const start = async () => {
-        const res = await contract.methods.start().call();
-        return res;
+    const startGame = async () => {
+        try {
+            const result = await contract.methods.start().send({
+                from: ethereum.selectedAddress,
+                value: web3.utils.toWei('1', 'ether'), // Replace with your desired bet amount
+            });
+
+            console.log(result);
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
     }
 
-    const move = async () => {
-        const res = await contract.methods.get().call();
-        return res;
-    }
+    // const getMove = async () => {
+    //     try {
+    //         const result = await contract.methods.move('oldCoordValue', 'newCoordValue').send({
+    //             from: accounts[0],
+    //         });
 
-    const getHistoryMoves = async () => {
-        const res = await contract.methods.get().call();
-        return res;
-    }
+    //         console.log(result);
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
 
-    const ends = async () => {
-        const res = await contract.methods.get().call();
-        return res;
-    }
+    // const endGame = async () => {
+    //     try {
+    //         const result = await contract.methods.ends(true).send({
+    //             from: accounts[0],
+    //         });
 
+    //         console.log(result);
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
 
 
 ////// display functions. 
@@ -109,6 +140,16 @@ export default function App() {
                 isConnected = {isConnected}
                 address = {address} 
                 networkType = {network} 
+                balance = {balance}
+            />
+        )
+    }
+
+    const ChessBoard = () => {
+        return (
+            <ChessBoard
+                isConnected = {isConnected}
+                startedGame = {setStartOfGame} 
                 balance = {balance}
             />
         )
