@@ -11,7 +11,6 @@ import Storage from "./components/storage/storage";
 import History from "./components/history/history";
 import Test from "./components/Test";
 import ChessBoard from "./components/chessboard/chessboard";
-import Matching from "./components/matching/matching";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 
 export default function App() {
@@ -242,7 +241,6 @@ export default function App() {
                     <Route path = "/EE4032ChessGame/storage" element = {<StorageDisplay/>}></Route>
                     <Route path = "/EE4032ChessGame/history" element = {<HistoryDisplay/>}></Route>
                     <Route path = "/EE4032ChessGame/chessboard" element = {<ChessBoard/>}></Route>
-                    <Route path = "/EE4032ChessGame/matching" element = {<Matching/>}></Route>
                 </Routes>
             </div>
     );
