@@ -1,6 +1,6 @@
 import {Routes, Route} from "react-router-dom";
 import {useNavigate} from "react-router-dom";
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {ethers} from 'ethers';
 import Web3 from "web3";
 import { extendTheme } from "@chakra-ui/react"
@@ -8,6 +8,7 @@ import './App.css';
 import Login from "./components/login/login";
 import Profile from "./components/profile/profile";
 import ChessBoard from "./components/chessboard/chessboard";
+import History from './components/history/history';
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "./contracts/config";
 import { ChakraProvider } from '@chakra-ui/react';
 import Navbar from './components/Navbar';
@@ -20,6 +21,13 @@ export default function App() {
     const [network, setNetwork] = useState(null);               // network the account is using. 
     const [balance, setBalance] = useState(0);                  // balance of connected MetaMask account. 
     const [isConnected, setIsConnected] = useState(false);      // check if is connected to MetaMask account. 
+
+    const [finalBidAmount, setFinalBidAmount] = useState(0);
+    useEffect(() => {
+        if(finalBidAmount != 0) {
+            startGame(finalBidAmount)
+        }
+    }, [finalBidAmount])
 
     const [storedPending, setStoredPending] = useState(false);        // check if a value is pending. 
     
@@ -35,8 +43,13 @@ export default function App() {
     const navigate = useNavigate();
     const {ethereum} = window;
     const provider = new ethers.BrowserProvider(window.ethereum);
-    const web3 = new Web3(Web3.givenProvider || "http://localhost:8545");
+    console.log(Web3.givenProvider)
+    console.log("abcd")
+    // const web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
+    const web3 = new Web3(ethereum);
     const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+
+    const SERVER_ADDRESS = "0x121bdE1406383681Aeba79bF1d04559d9400Bad0"
 
 
 ////// connect to MetaMask. 
@@ -94,12 +107,67 @@ export default function App() {
 
 ////// Contract Deployment. 
     // IMPORTANT: async / await is essential to get values instead of Promise. 
-    const startGame = async () => {
+    const startGame = async (biddingAmount) => {
+        // console.log(ethereum.selectedAddress)
         try {
             const result = await contract.methods.start().send({
+                // from: "0x652A7aA3FE781a31B9809D280715d55BAC2300f6",
                 from: ethereum.selectedAddress,
-                value: web3.utils.toWei('1', 'ether'), // Replace with your desired bet amount
+                value: biddingAmount,
+                // value: web3.utils.toWei('1', 'ether'), // Replace with your desired bet amount
             });
+
+            // console.log(result);
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const move = async (from, to) => {
+        try {
+            const result = await contract.methods.move(from, to).send({
+                from:ethereum.selectedAddress,
+            });
+
+            // console.log(result);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const getHistoryMoves = async() => {
+        try {
+            const result = await contract.methods.getHistoryMoves().call({
+                from: ethereum.selectedAddress
+            });
+
+            // console.log(result);
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const getAmountBet = async() => {
+        try {
+            const result = await contract.methods.getAmountBet().call({
+                from: ethereum.selectedAddress
+            });
+
+            // console.log(result);
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const endGame = async () => {
+        try {
+            const result = await contract.methods.ends(ethereum.selectedAddress, false).send({
+                from: SERVER_ADDRESS,
+                value: web3.utils.toWei('1', 'ether'), // Replace with your desired bet amount
+            })
 
             console.log(result);
             return result;
@@ -145,13 +213,31 @@ export default function App() {
         )
     }
 
-    const ChessBoard = () => {
+    const ChessBoardDisplay = () => {
         return (
             <ChessBoard
                 isConnected = {isConnected}
-                startedGame = {setStartOfGame} 
+                setStartOfGame = {setStartOfGame} 
+                // startedGame = {}
                 balance = {balance}
             />
+        )
+    }
+
+    // const HistoryDisplay = () => {
+    //     return (
+    //         <History />
+    //     )
+    // }
+
+    const Test = () => {
+        return (
+        <>
+            <button onClick = {startGame}>start</button>
+            <button onClick = {endGame}>end</button>
+            <button onClick = {move}>move</button>
+            <button onClick = {getHistoryMoves}>history</button>
+        </>
         )
     }
 
@@ -162,8 +248,9 @@ export default function App() {
                 <Routes>
                     <Route path="/EE4032ChessGame/" element={<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />} />
                     <Route path = "/EE4032ChessGame/profile" element = {<ProfileDisplay/>}></Route>
-                    <Route path = "/EE4032ChessGame/bidding" element = {<Bidding/>}></Route>
-                    <Route path = "/EE4032ChessGame/chessboard" element = {<ChessBoard/>}></Route>
+                    <Route path = "/EE4032ChessGame/bidding" element = {<Bidding setFinalBidAmount={setFinalBidAmount}/>}></Route>
+                    <Route path = "/EE4032ChessGame/chessboard" element = {<ChessBoardDisplay/>}></Route>
+                    <Route path = "/EE4032ChessGame/history" element = {<History getHistory={getHistoryMoves} getAmountBet={getAmountBet}/>}></Route>
                 </Routes>
             </div>
             </ChakraProvider>

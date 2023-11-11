@@ -7,9 +7,9 @@ import "./chessboard.css"; // Import your CSS file
 const ChessBoard = (props) => {
   const { isConnected, startedGame, balance } = props;
 
-  if (!startedGame) {
-    return null; // Don't render the ChessBoard component if startGame is false
-  }
+  // if (!startedGame) {
+  //   return null; // Don't render the ChessBoard component if startGame is false
+  // }
 
   return (
     <ChessBoardInternal
@@ -214,6 +214,10 @@ const ChessBoardInternal = (props) => {
     setWinner(null);
     setCapturedPieces({});
   };
+
+  useEffect(() => {
+    handleNewGame()
+  }, [])
 
   const handleQuitGame = () => {
     handleNewGame();

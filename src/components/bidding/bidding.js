@@ -6,7 +6,7 @@ import Cookies from "js-cookie";
 
 import "./bidding.css"; // Import your CSS file
 
-const Bidding = () => {
+const Bidding = ({setFinalBidAmount}) => {
   const [biddingAmount, setBiddingAmount] = useState("");
   const navigate = useNavigate();
 
@@ -26,6 +26,7 @@ const Bidding = () => {
   const handleBidSubmit = () => {
     Cookies.set("biddingAmount", biddingAmount);
     navigate("/EE4032ChessGame/chessboard");
+    setFinalBidAmount(biddingAmount)
   };
 
   return (

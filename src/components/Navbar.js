@@ -20,6 +20,9 @@ const Navbar = () => {
           <Link to="/EE4032ChessGame/profile">
             <Button colorScheme="whiteAlpha">Profile</Button>
           </Link>
+          <Link to="/EE4032ChessGame/history">
+            <Button colorScheme="whiteAlpha">History</Button>
+          </Link>
           <Link to="/EE4032ChessGame/bidding">
             <Button colorScheme="whiteAlpha">Play Chess</Button>
           </Link>
