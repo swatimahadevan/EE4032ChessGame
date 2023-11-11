@@ -5,16 +5,16 @@ import { Navigate } from "react-router-dom";
 import "./chessboard.css"; // Import your CSS file
 
 const ChessBoard = (props) => {
-  const { isConnected, startGame, balance } = props;
+  const { isConnected, startedGame, balance } = props;
 
-  if (!startGame) {
+  if (!startedGame) {
     return null; // Don't render the ChessBoard component if startGame is false
   }
 
   return (
     <ChessBoardInternal
       isConnected={isConnected}
-      startGame={props.setStartOfGame}
+      startedGame={props.setStartOfGame}
       balance={balance}
     />
   );

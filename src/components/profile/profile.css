@@ -12,57 +12,66 @@
 body {
   margin: 0;
   padding: 0;
+  height: 100vh; /* Ensure the body takes full viewport height */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
 }
 
 /* Existing styles */
 .profile-background {
+  background-image: url("../../images/bgpic.jpg");
+  background-size: cover;
+  background-position: center;
+  position: absolute;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Adjust the height as needed */
 }
 
 .profile {
-  position: relative;
+  background-color: var(--BackgroundUncovered);
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh; /* Set the height to 100% of the viewport height */
+}
+
+.logo-section {
+  margin-bottom: 20px; /* Adjust the margin as needed to reduce space */
 }
 
 .logo-and-details {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
 .logo-container {
-  width: 100px; /* Adjust the width as needed */
-  height: 100px; /* Adjust the height as needed */
+  width: 100%;
+  max-width: 200px;
+  height: 100px;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .logo-container img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: contain;
+  display: block;
 }
 
 .profile-account {
   font-size: 25px;
-  height: 100%;
-  width: 70%;
-  text-align: left;
-  padding-left: 20px;
-  padding-right: 10px;
-  padding-bottom: 10px;
+  text-align: center;
+  padding: 10px;
   color: var(--MessageColorUncovered);
 }
 
@@ -70,25 +79,6 @@ body {
   font-weight: bold;
 }
 
-/* New styles */
-.profile-background {
-  background-image: url("../../images/bgpic.jpg");
-  background-size: 100%;
-  background-position-x: center;
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  flex-direction: column;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.profile {
-  background-color: var(--BackgroundUncovered);
-  height: 100%; /* Adjust the height as needed */
-  width: 100%; /* Adjust the width as needed */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.global-toolbar-section {
+  margin-top: 20px; /* Adjust the margin as needed to reduce space */
 }

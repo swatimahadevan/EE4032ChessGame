@@ -21,10 +21,8 @@ export default function Profile(props) {
     return (
       <div className="profile-background">
         <div className="profile">
-          <div className="logo-and-details">
-            <div className="logo-container">
-              <img src={METAMASK} alt="logo" height="100%" />
-            </div>
+        <GlobalToolBar className="global-toolbar-section" />
+          <div className="logo-and-details logo-section">
             <div className="profile-account">
               <p>
                 <b>Profile details</b>
@@ -43,9 +41,13 @@ export default function Profile(props) {
               </p>
             </div>
           </div>
+
+          <div className="logo-container logo-section">
+            <img src={METAMASK} alt="logo" height="100%" />
+          </div>
         </div>
 
-        <GlobalToolBar />
+      
       </div>
     );
   };
