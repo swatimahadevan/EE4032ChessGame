@@ -17,20 +17,20 @@
   /* Add other background properties like background-position, etc. if needed */
   
   text-align: center;
-  background-color: var(--BackgroundCovered);
+  background-color: black;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: var(--MessageColorCovered);
+  color: black;
 }
 
 
 .login{
     text-align: center;
-    background-color: var(--BackgroundCovered);
+    background-color: blue;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -47,7 +47,7 @@
 }
 
 .login-highlight{
-    color: var(--HighlightColor);
+    color: blue;
 }
 
 .login-logo{

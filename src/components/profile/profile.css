@@ -32,7 +32,7 @@ body {
 }
 
 .profile {
-  background-color: var(--BackgroundUncovered);
+  background-color: black;
   height: 100%;
   width: 100%;
   display: flex;
@@ -50,6 +50,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  color: white; /* Set font color to white */
 }
 
 .logo-container {
@@ -72,13 +73,15 @@ body {
   font-size: 25px;
   text-align: center;
   padding: 10px;
-  color: var(--MessageColorUncovered);
+  color: white; /* Set font color to white */
 }
 
 .global-message {
   font-weight: bold;
+  color: white; /* Set font color to white */
 }
 
 .global-toolbar-section {
   margin-top: 20px; /* Adjust the margin as needed to reduce space */
+  color: white; /* Set font color to white */
 }

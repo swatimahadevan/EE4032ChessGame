@@ -5,7 +5,7 @@ import LOGO from '../images/crypto_chess_logo.png';
 
 const Navbar = () => {
   return (
-    <Box bg="#D69E2E" p={4} color="white">
+    <Box bg="#3182CE" p={4} color="white">
       <Flex align="center" justify="space-between">
         <Heading as="h1" size="lg">
         <img src={LOGO} alt="logo" style={{ maxHeight: '50px' }} height="100%" />
