@@ -22,10 +22,10 @@ export default function App() {
     const [balance, setBalance] = useState(0);                  // balance of connected MetaMask account. 
     const [isConnected, setIsConnected] = useState(false);      // check if is connected to MetaMask account. 
 
-    const [finalBidAmount, setFinalBidAmount] = useState(0);
+    const [finalBidAmount, setFinalBidAmount] = useState(-1);
     useEffect(() => {
-        if(finalBidAmount != 0) {
-            startGame(finalBidAmount)
+        if(!startedGame && finalBidAmount != -1) {
+            setStartOfGame(finalBidAmount)
         }
     }, [finalBidAmount])
 
@@ -43,8 +43,7 @@ export default function App() {
     const navigate = useNavigate();
     const {ethereum} = window;
     const provider = new ethers.BrowserProvider(window.ethereum);
-    console.log(Web3.givenProvider)
-    console.log("abcd")
+
     // const web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
     const web3 = new Web3(ethereum);
     const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
@@ -95,7 +94,6 @@ export default function App() {
 
     ////// set start of game 
     const setStartOfGame = async () => {
-
         try{
             const detail = await startGame();   // contract deployed. 
             setStartedGame(true);
@@ -107,17 +105,13 @@ export default function App() {
 
 ////// Contract Deployment. 
     // IMPORTANT: async / await is essential to get values instead of Promise. 
-    const startGame = async (biddingAmount) => {
-        // console.log(ethereum.selectedAddress)
+    const startGame = async () => {
         try {
             const result = await contract.methods.start().send({
-                // from: "0x652A7aA3FE781a31B9809D280715d55BAC2300f6",
                 from: ethereum.selectedAddress,
-                value: biddingAmount,
-                // value: web3.utils.toWei('1', 'ether'), // Replace with your desired bet amount
+                value: finalBidAmount,
             });
 
-            // console.log(result);
             return result;
         } catch (error) {
             console.error(error);
@@ -127,7 +121,7 @@ export default function App() {
     const move = async (from, to) => {
         try {
             const result = await contract.methods.move(from, to).send({
-                from:ethereum.selectedAddress,
+                from: ethereum.selectedAddress,
             });
 
             // console.log(result);
@@ -149,11 +143,24 @@ export default function App() {
         }
     }
 
-    const getAmountBet = async() => {
+    const getBetAmount = async() => {
         try {
-            const result = await contract.methods.getAmountBet().call({
+            const result = await contract.methods.getBetAmount().call({
                 from: ethereum.selectedAddress
             });
+
+            // console.log(result);
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const restartGame = async () => {
+        try {
+            const result = await contract.methods.restart().send({
+                from: ethereum.selectedAddress,
+            })
 
             // console.log(result);
             return result;
@@ -166,7 +173,7 @@ export default function App() {
         try {
             const result = await contract.methods.ends(ethereum.selectedAddress, false).send({
                 from: SERVER_ADDRESS,
-                value: web3.utils.toWei('1', 'ether'), // Replace with your desired bet amount
+                value: finalBidAmount,
             })
 
             console.log(result);
@@ -175,31 +182,6 @@ export default function App() {
             console.error(error);
         }
     }
-
-    // const getMove = async () => {
-    //     try {
-    //         const result = await contract.methods.move('oldCoordValue', 'newCoordValue').send({
-    //             from: accounts[0],
-    //         });
-
-    //         console.log(result);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
-
-    // const endGame = async () => {
-    //     try {
-    //         const result = await contract.methods.ends(true).send({
-    //             from: accounts[0],
-    //         });
-
-    //         console.log(result);
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
-
 
 ////// display functions. 
     const ProfileDisplay = () => {
@@ -217,27 +199,18 @@ export default function App() {
         return (
             <ChessBoard
                 isConnected = {isConnected}
-                setStartOfGame = {setStartOfGame} 
-                // startedGame = {}
+                startedGame = {startedGame}
                 balance = {balance}
+                move = {move}
+                endGame = {endGame}
+                restartGame = {restartGame}
             />
         )
     }
 
-    // const HistoryDisplay = () => {
-    //     return (
-    //         <History />
-    //     )
-    // }
-
-    const Test = () => {
+    const HistoryDisplay = () => {
         return (
-        <>
-            <button onClick = {startGame}>start</button>
-            <button onClick = {endGame}>end</button>
-            <button onClick = {move}>move</button>
-            <button onClick = {getHistoryMoves}>history</button>
-        </>
+            <History getHistory={getHistoryMoves} getBetAmount={getBetAmount}/>
         )
     }
 
@@ -248,9 +221,9 @@ export default function App() {
                 <Routes>
                     <Route path="/EE4032ChessGame/" element={<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />} />
                     <Route path = "/EE4032ChessGame/profile" element = {<ProfileDisplay/>}></Route>
-                    <Route path = "/EE4032ChessGame/bidding" element = {<Bidding setFinalBidAmount={setFinalBidAmount}/>}></Route>
-                    <Route path = "/EE4032ChessGame/chessboard" element = {<ChessBoardDisplay/>}></Route>
-                    <Route path = "/EE4032ChessGame/history" element = {<History getHistory={getHistoryMoves} getAmountBet={getAmountBet}/>}></Route>
+                    <Route path = "/EE4032ChessGame/bidding" element = {<Bidding startedGame={startedGame} setFinalBidAmount={setFinalBidAmount}/>}></Route>
+                    <Route path = "/EE4032ChessGame/chessboard" element = {<ChessBoardDisplay />}></Route>
+                    <Route path = "/EE4032ChessGame/history" element = {<HistoryDisplay/>}></Route>
                 </Routes>
             </div>
             </ChakraProvider>

@@ -7,7 +7,7 @@ contract Chess {
         string newCoord;
     }
 
-    address public server = 0x121bdE1406383681Aeba79bF1d04559d9400Bad0;
+    address public server = 0xD5342e25cB392b5FF20E0BdaDE80335bD771CfAE;
     // uint MAX_BET_AMOUNT = 10;
 
     mapping(address => uint) public bets;
@@ -26,6 +26,11 @@ contract Chess {
     function move(string memory oldCoord, string memory newCoord) public {
         require(!hasEnded[msg.sender], "Session has already ended");
         moves[msg.sender].push(Move(oldCoord, newCoord));
+    }
+
+    function restart() public {
+        hasEnded[msg.sender] = false;
+        delete moves[msg.sender];
     }
 
     function getHistoryMoves() public view returns(string memory) {

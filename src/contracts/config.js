@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0x2b42dB37ada2fe667Fd8426c33859cFc2d48D2a5";
+export const CONTRACT_ADDRESS = "0x71a3F9aE39Cf420D7035C07252eDbC60Bcc9273F";
 export const CONTRACT_ABI = [
 	{
 		"inputs": [],
@@ -26,6 +26,19 @@ export const CONTRACT_ABI = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "getBetAmount",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "string",
@@ -39,6 +52,13 @@ export const CONTRACT_ABI = [
 			}
 		],
 		"name": "move",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "restart",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"

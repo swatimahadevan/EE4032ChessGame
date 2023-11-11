@@ -1,12 +1,12 @@
 // Bidding.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Chessboard from "chessboardjsx";
 import Cookies from "js-cookie";
 
 import "./bidding.css"; // Import your CSS file
 
-const Bidding = ({setFinalBidAmount}) => {
+const Bidding = ({startedGame, setFinalBidAmount}) => {
   const [biddingAmount, setBiddingAmount] = useState("");
   const navigate = useNavigate();
 
@@ -28,6 +28,12 @@ const Bidding = ({setFinalBidAmount}) => {
     navigate("/EE4032ChessGame/chessboard");
     setFinalBidAmount(biddingAmount)
   };
+
+  useEffect(() => {
+    if (startedGame) {
+      navigate("/EE4032ChessGame/chessboard");
+    }
+  }, [startedGame]);
 
   return (
     <div className="flex-center chessboard-container">

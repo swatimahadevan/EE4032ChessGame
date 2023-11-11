@@ -3,24 +3,24 @@ import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Chessboard from "chessboardjsx";
 import { Chess } from "chess.js";
-import { Stack, Button, Text } from '@chakra-ui/react';
+import { Stack, Button, Text, Spinner } from '@chakra-ui/react';
 
 import "./history.css"; // Import your CSS file
 
-const History = ({getHistory, getAmountBet}) => {
+const History = ({getHistory, getBetAmount}) => {
     const [chess] = useState(
         new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
       );
 
-    const [amountBet, setAmountBet] = useState(0)
+    const [amountBet, setAmountBet] = useState(null)
     const [moveNum, setMoveNum] = useState(0);
     const [fen, setFen] = useState(chess.fen())
     const [moves, setMoves] = useState([]); // playerMoveSrc, playerMoveDst, AIMoveSrc, AIMoveDst, ...
     useEffect(() => {
         const fn = async() => {
-            const amtBet = await getAmountBet() || 0;
+            const amtBet = await getBetAmount();
             const moveHistory = await getHistory();
-            setAmountBet(amtBet)
+            setAmountBet(Number(amtBet))
             setMoves(moveHistory.match(/.{1,2}/g) || []);
         }
 
@@ -43,6 +43,21 @@ const History = ({getHistory, getAmountBet}) => {
         setMoveNum(num)
         chess.reset()
     }, [])
+
+
+    if (amountBet == null) {
+        return (
+            <div className="flex-center history-container">
+                <Spinner
+                    thickness='4px'
+                    speed='0.65s'
+                    emptyColor='gray.200'
+                    color='blue.500'
+                    size='xl'
+                />
+            </div>
+        )
+    }
 
     return (
         <div className="flex-center history-container">

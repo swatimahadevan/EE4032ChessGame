@@ -2,25 +2,39 @@ import React, { useState, useEffect } from "react";
 import Chessboard from "chessboardjsx";
 import { Chess } from "chess.js";
 import { Navigate } from "react-router-dom";
+import { Spinner } from '@chakra-ui/react'
 import "./chessboard.css"; // Import your CSS file
 
 const ChessBoard = (props) => {
-  const { isConnected, startedGame, balance } = props;
+  const { isConnected, startedGame, balance, move, endGame, restartGame } = props;
 
-  // if (!startedGame) {
-  //   return null; // Don't render the ChessBoard component if startGame is false
-  // }
+  if (!startedGame) {
+    return (
+      <div className="flex-center chessboard-container">
+        <Spinner
+          thickness='4px'
+          speed='0.65s'
+          emptyColor='gray.200'
+          color='blue.500'
+          size='xl'
+        />
+      </div>
+    )
+  }
 
   return (
     <ChessBoardInternal
       isConnected={isConnected}
-      startedGame={props.setStartOfGame}
       balance={balance}
+      move={move}
+      endGame={endGame}
+      restartGame={restartGame}
     />
   );
 };
 
 const ChessBoardInternal = (props) => {
+  const {move, endGame, restartGame} = props
   const [chess] = useState(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   );
@@ -89,11 +103,13 @@ const ChessBoardInternal = (props) => {
       ...highlightStyles,
     };
   };
-  const handleMove = (x, y, new_x, new_y) => {
+  const handleMove = async (x, y, new_x, new_y) => {
     try {
+      const from = `${x}${y}`
+      const to = `${new_x}${new_y}`
       const chessMove = chess.move({
-        from: `${x}${y}`,
-        to: `${new_x}${new_y}`,
+        from: from,
+        to: to,
         promotion: "q",
       });
 
@@ -117,18 +133,23 @@ const ChessBoardInternal = (props) => {
 
       setFen(chess.fen());
       updateCapturedPieces();
-
+      /* await */ move(from, to)
       // Check for winner after each move
       if (chess.isGameOver()) {
         const winner = chess.turn() === "w" ? "Black" : "White";
+        const isPlayerWin = winner === "White"
+        endGame(isPlayerWin)
         setWinner(winner);
         setGameStatus(`Checkmate! ${winner} wins!`);
       } else {
-        setTimeout(() => {
+        setTimeout(async() => {
           const moves = chess.moves();
           if (moves.length > 0) {
             const computerMove = getBestMove();
             const computerMoveResult = chess.move(computerMove);
+
+            let lastMove = chess.history({verbose: true})
+            lastMove = lastMove[lastMove.length - 1]
 
             // Check for captures in computer move
             if (computerMoveResult && computerMoveResult.captured) {
@@ -140,6 +161,7 @@ const ChessBoardInternal = (props) => {
 
             setFen(chess.fen());
             updateCapturedPieces();
+            /* await */ move(lastMove.from, lastMove.to)
 
             // Check for winner after computer move
             if (chess.isGameOver()) {
@@ -207,20 +229,17 @@ const ChessBoardInternal = (props) => {
     localStorage.setItem("chessFen", chess.fen());
   }, [fen]);
 
-  const handleNewGame = () => {
+  const handleNewGame = async() => {
     chess.reset();
     setFen(chess.fen());
     setGameStatus("");
     setWinner(null);
     setCapturedPieces({});
+    await restartGame()
   };
 
-  useEffect(() => {
-    handleNewGame()
-  }, [])
-
-  const handleQuitGame = () => {
-    handleNewGame();
+  const handleQuitGame = async () => {
+    await handleNewGame();
   };
   
   return (
@@ -236,8 +255,8 @@ const ChessBoardInternal = (props) => {
     <Chessboard
         width={400}
         position={fen}
-        onDrop={(move) =>
-          handleMove(
+        onDrop={async(move) =>
+          await handleMove(
             move.sourceSquare[0],
             move.sourceSquare[1],
             move.targetSquare[0],
