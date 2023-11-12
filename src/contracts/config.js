@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0x71a3F9aE39Cf420D7035C07252eDbC60Bcc9273F";
+export const CONTRACT_ADDRESS = "0x0e3063803289Adc0cd6A6c3909e3d650c2D7b7AA";
 export const CONTRACT_ABI = [
 	{
 		"inputs": [],
@@ -88,68 +88,37 @@ export const CONTRACT_ABI = [
 		"stateMutability": "payable",
 		"type": "function"
 	},
+	{
+		"inputs": [],
+		"name": "getBalance",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "amount",
+				"type": "uint256"
+			}
+		],
+		"name": "withdraw",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "deposit",
+		"outputs": [],
+		"stateMutability": "payable",
+		"type": "function"
+	},
 ]
-
-
-
-
-// export const CONTRACT_ABI = [
-// 	{
-// 		"inputs": [
-// 			{
-// 				"internalType": "uint256",
-// 				"name": "x",
-// 				"type": "uint256"
-// 			}
-// 		],
-// 		"name": "set",
-// 		"outputs": [],
-// 		"stateMutability": "nonpayable",
-// 		"type": "function"
-// 	},
-// 	{
-// 		"inputs": [],
-// 		"name": "get",
-// 		"outputs": [
-// 			{
-// 				"internalType": "uint256",
-// 				"name": "",
-// 				"type": "uint256"
-// 			}
-// 		],
-// 		"stateMutability": "view",
-// 		"type": "function"
-// 	}
-// ];
-
-
-// export const CONTRACT_ADDRESS = "0x2a20734277babe8d1caa5900de495301c3111c78";
-// export const CONTRACT_ABI = [
-// 	{
-// 		"inputs": [
-// 			{
-// 				"internalType": "uint256",
-// 				"name": "x",
-// 				"type": "uint256"
-// 			}
-// 		],
-// 		"name": "set",
-// 		"outputs": [],
-// 		"stateMutability": "nonpayable",
-// 		"type": "function"
-// 	},
-// 	{
-// 		"inputs": [],
-// 		"name": "get",
-// 		"outputs": [
-// 			{
-// 				"internalType": "uint256",
-// 				"name": "",
-// 				"type": "uint256"
-// 			}
-// 		],
-// 		"stateMutability": "view",
-// 		"type": "function"
-// 	}
-// ];
-

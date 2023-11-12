@@ -14,6 +14,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Bidding from './components/bidding/bidding';
+import AdminPortal from "./components/adminportal/adminportal";
 
 export default function App() {
     const [haveMetamask, setHaveMetamask] = useState(true);     // check if the browser has MetaMask installed. 
@@ -48,7 +49,7 @@ export default function App() {
     const web3 = new Web3(ethereum);
     const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
 
-    const SERVER_ADDRESS = "0x121bdE1406383681Aeba79bF1d04559d9400Bad0"
+    const SERVER_ADDRESS = "0xd5342e25cb392b5ff20e0bdade80335bd771cfae"
 
 
 ////// connect to MetaMask. 
@@ -169,11 +170,51 @@ export default function App() {
         }
     }
 
-    const endGame = async () => {
+    const endGame = async (isPlayerWin) => {
         try {
-            const result = await contract.methods.ends(ethereum.selectedAddress, false).send({
+            const result = await contract.methods.ends(ethereum.selectedAddress, isPlayerWin).send({
                 from: SERVER_ADDRESS,
                 value: finalBidAmount,
+            })
+
+            console.log(result);
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const deposit = async (amt) => {
+        try {
+            const result = await contract.methods.deposit().send({
+                from: ethereum.selectedAddress,
+                value: amt
+            })
+
+            console.log(result);
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const withdraw = async (amt) => {
+        try {
+            const result = await contract.methods.withdraw(amt).send({
+                from: ethereum.selectedAddress,
+            })
+
+            console.log(result);
+            return result;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const getBalance = async () => {
+        try {
+            const result = await contract.methods.getBalance().call({
+                from: ethereum.selectedAddress,
             })
 
             console.log(result);
@@ -224,6 +265,7 @@ export default function App() {
                     <Route path = "/EE4032ChessGame/bidding" element = {<Bidding startedGame={startedGame} setFinalBidAmount={setFinalBidAmount}/>}></Route>
                     <Route path = "/EE4032ChessGame/chessboard" element = {<ChessBoardDisplay />}></Route>
                     <Route path = "/EE4032ChessGame/history" element = {<HistoryDisplay/>}></Route>
+                    <Route path = "/EE4032ChessGame/adminportal" element = {<AdminPortal user={ethereum.selectedAddress} deposit={deposit} withdraw={withdraw} getBalance={getBalance}/>}></Route>
                 </Routes>
             </div>
             </ChakraProvider>

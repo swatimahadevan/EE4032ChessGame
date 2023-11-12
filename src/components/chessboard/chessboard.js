@@ -249,7 +249,7 @@ const ChessBoardInternal = (props) => {
     {winner && <div className="winner">Winner: {winner}</div>}
     {errorMessage && <div className="error-message">{errorMessage}</div>}
     <div>
-      <button className="new-game-button" onClick={handleNewGame}>New Game</button>
+      <button className="new-game-button" onClick={async() => await handleNewGame()}>New Game</button>
     </div>
     {/* ... (existing code) */}
     <Chessboard
