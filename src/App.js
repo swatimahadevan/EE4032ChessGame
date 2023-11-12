@@ -118,9 +118,9 @@ export default function App() {
         }
     }
 
-    const move = async (from, to) => {
+    const move = async (froms, tos) => {
         try {
-            const result = await contract.methods.move(from, to).send({
+            const result = await contract.methods.move(froms, tos).send({
                 from: ethereum.selectedAddress,
             });
 

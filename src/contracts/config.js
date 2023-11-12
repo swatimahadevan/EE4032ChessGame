@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0xfB1d0e4F2958dCE7a857Cf6A9B70E2a278b8Ea1B";
+export const CONTRACT_ADDRESS = "0x66e6Ee757851d245D4a0Fcf598431b9376a2ef7D";
 export const CONTRACT_ABI = [
 	{
 		"inputs": [],
@@ -41,14 +41,14 @@ export const CONTRACT_ABI = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "oldCoord",
-				"type": "string"
+				"internalType": "string[]",
+				"name": "moveStringFrom",
+				"type": "string[]"
 			},
 			{
-				"internalType": "string",
-				"name": "newCoord",
-				"type": "string"
+				"internalType": "string[]",
+				"name": "moveStringTo",
+				"type": "string[]"
 			}
 		],
 		"name": "move",

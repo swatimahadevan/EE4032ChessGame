@@ -30,11 +30,13 @@ const ChessBoard = (props) => {
 
 const ChessBoardInternal = (props) => {
   const {isConnected, move, endGame, restartGame, setStartedGame} = props
+  const [isLoading, setIsLoading] = useState(false);
   const [chess] = useState(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   );
 
-  const [allMoves, setAllMoves] = useState([]);
+  const [allMovesFrom, setAllMovesFrom] = useState([]);
+  const [allMovesTo, setAllMovesTo] = useState([]);
   const [fen, setFen] = useState(chess.fen());
   const [selectedSquare, setSelectedSquare] = useState(null);
   const [hoveredSquare, setHoveredSquare] = useState(null);
@@ -114,8 +116,8 @@ const ChessBoardInternal = (props) => {
       });
 
        // Add the player's move to the list of all moves
-       const playerMove = `(${from}, ${to})`;
-       setAllMoves((prevMoves) => [...prevMoves, playerMove]);
+       setAllMovesFrom((prevMoves) => [...prevMoves, from])
+       setAllMovesTo((prevMoves) => [...prevMoves, to])
 
       // Check if the move is valid
       if (!chessMove) {
@@ -144,8 +146,10 @@ const ChessBoardInternal = (props) => {
         const isPlayerWin = winner === "White"
         setWinner(winner);
         setGameStatus(`Checkmate! ${winner} wins!`);
+        setIsLoading(true)
+        await move([...allMovesFrom, from], [...allMovesTo, to])
         await endGame(isPlayerWin)
-        move(formatMovesString(allMoves))
+        setIsLoading(false)
       } else {
         setTimeout(async() => {
           const moves = chess.moves();
@@ -153,11 +157,11 @@ const ChessBoardInternal = (props) => {
             const computerMove = getBestMove();
             const computerMoveResult = chess.move(computerMove);
             // Add the computer's move to the list of all moves
-            const computerMoveString = `(${computerMove.from}, ${computerMove.to})`;
-            setAllMoves((prevMoves) => [...prevMoves, computerMoveString]);
 
             let lastMove = chess.history({verbose: true})
             lastMove = lastMove[lastMove.length - 1]
+            setAllMovesFrom((prevMoves) => [...prevMoves, lastMove.from])
+            setAllMovesTo((prevMoves) => [...prevMoves, lastMove.to])
 
             // Check for captures in computer move
             if (computerMoveResult && computerMoveResult.captured) {
@@ -174,9 +178,13 @@ const ChessBoardInternal = (props) => {
             // Check for winner after computer move
             if (chess.isGameOver()) {
               const winner = chess.turn() === "w" ? "Black" : "White";
+              const isPlayerWin = winner === "White"
               setWinner(winner);
               setGameStatus(`Checkmate! ${winner} wins!`);
-              move(formatMovesString(allMoves))
+              setIsLoading(true)
+              await move([...allMovesFrom, from], [...allMovesTo, to])
+              await endGame(isPlayerWin)
+              setIsLoading(false)
             }
           }
         }, 300);
@@ -187,9 +195,9 @@ const ChessBoardInternal = (props) => {
     }
   };
 
-  const formatMovesString = (moves) => {
-    return moves.join(", ");
-  };
+  // const formatMovesString = (moves) => {
+  //   return moves.join(", ");
+  // };
 
   const getBestMove = () => {
     const moves = chess.moves();
@@ -257,6 +265,7 @@ const ChessBoardInternal = (props) => {
   const handleQuitGame = async () => {
     await handleNewGame();
   };
+
   
   return (
     isConnected ? 
@@ -270,6 +279,7 @@ const ChessBoardInternal = (props) => {
       <button className="new-game-button" onClick={async() => await handleNewGame()}>New Game</button>
     </div>
     {/* ... (existing code) */}
+    {isLoading && <><div>Storing result</div><Loader /></>}
     <Chessboard
         width={400}
         position={fen}

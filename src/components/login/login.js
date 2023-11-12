@@ -36,7 +36,7 @@ export default function Login(props) {
                 <p style={fancyFontStyle}>
                     <span style={{ fontWeight: 'bold', fontSize: '24px' }}>Crypto Chess&nbsp;</span>
                 </p>
-                <a className="global-link" onClick={props.connectTo} style={fancyFontStyle}>
+                <a className="global-link" onClick={props.connectTo} style={{...fancyFontStyle, cursor: 'pointer'}}>
                     Click here to connect
                 </a>
             </div>
