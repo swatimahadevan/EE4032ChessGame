@@ -33,9 +33,12 @@ const ChessBoardInternal = (props) => {
   const [chess] = useState(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   );
+
+  const [allMoves, setAllMoves] = useState([]);
   const [fen, setFen] = useState(chess.fen());
   const [selectedSquare, setSelectedSquare] = useState(null);
   const [hoveredSquare, setHoveredSquare] = useState(null);
+
   const [capturedPieces, setCapturedPieces] = useState({});
   const [validMoves, setValidMoves] = useState([]);
 
@@ -110,6 +113,10 @@ const ChessBoardInternal = (props) => {
         promotion: "q",
       });
 
+       // Add the player's move to the list of all moves
+       const playerMove = `(${from}, ${to})`;
+       setAllMoves((prevMoves) => [...prevMoves, playerMove]);
+
       // Check if the move is valid
       if (!chessMove) {
         setErrorMessage("Invalid move. Please try again.");
@@ -130,7 +137,7 @@ const ChessBoardInternal = (props) => {
 
       setFen(chess.fen());
       updateCapturedPieces();
-      /* await */ move(from, to)
+      // /* await */ move(from, to)
       // Check for winner after each move
       if (chess.isGameOver()) {
         const winner = chess.turn() === "w" ? "Black" : "White";
@@ -138,12 +145,16 @@ const ChessBoardInternal = (props) => {
         setWinner(winner);
         setGameStatus(`Checkmate! ${winner} wins!`);
         await endGame(isPlayerWin)
+        move(formatMovesString(allMoves))
       } else {
         setTimeout(async() => {
           const moves = chess.moves();
           if (moves.length > 0) {
             const computerMove = getBestMove();
             const computerMoveResult = chess.move(computerMove);
+            // Add the computer's move to the list of all moves
+            const computerMoveString = `(${computerMove.from}, ${computerMove.to})`;
+            setAllMoves((prevMoves) => [...prevMoves, computerMoveString]);
 
             let lastMove = chess.history({verbose: true})
             lastMove = lastMove[lastMove.length - 1]
@@ -158,13 +169,14 @@ const ChessBoardInternal = (props) => {
 
             setFen(chess.fen());
             updateCapturedPieces();
-            /* await */ move(lastMove.from, lastMove.to)
+            // /* await */ move(lastMove.from, lastMove.to)
 
             // Check for winner after computer move
             if (chess.isGameOver()) {
               const winner = chess.turn() === "w" ? "Black" : "White";
               setWinner(winner);
               setGameStatus(`Checkmate! ${winner} wins!`);
+              move(formatMovesString(allMoves))
             }
           }
         }, 300);
@@ -173,6 +185,15 @@ const ChessBoardInternal = (props) => {
       console.error("Error:", error.message);
       setErrorMessage("Invalid move. Please try again.");
     }
+  };
+
+  const formatMovesString = (moves) => {
+    // Combine player's and computer's moves in alternating order
+    const formattedMoves = [];
+    for (let i = 0; i < Math.min(moves.length, 10); i++) {
+      formattedMoves.push(moves[i]);
+    }
+    return formattedMoves.join(", ");
   };
 
   const getBestMove = () => {
