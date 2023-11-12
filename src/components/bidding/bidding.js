@@ -1,12 +1,13 @@
 // Bidding.js
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, Navigate } from "react-router-dom";
 import Chessboard from "chessboardjsx";
 import Cookies from "js-cookie";
 
 import "./bidding.css"; // Import your CSS file
+import { Button } from "@chakra-ui/react";
 
-const Bidding = () => {
+const Bidding = ({isConnected, startedGame, setFinalBidAmount}) => {
   const [biddingAmount, setBiddingAmount] = useState("");
   const navigate = useNavigate();
 
@@ -26,27 +27,37 @@ const Bidding = () => {
   const handleBidSubmit = () => {
     Cookies.set("biddingAmount", biddingAmount);
     navigate("/EE4032ChessGame/chessboard");
+    setFinalBidAmount(biddingAmount)
   };
 
+  useEffect(() => {
+    if (startedGame) {
+      navigate("/EE4032ChessGame/chessboard");
+    }
+  }, [startedGame]);
+
   return (
+    isConnected ?
     <div className="flex-center chessboard-container">
       <h2>Enter your bidding amount:</h2>
       <label htmlFor="biddingAmount">Bidding Amount:</label>
       <input
-  id="biddingAmount"
-  type="number"
-  value={biddingAmount}
-  onChange={handleBidChange}
-  placeholder="Enter amount"
-  title="Enter a positive bidding amount"
-/>
-      {biddingAmount <= 0 && (
-        <p className="error-text">Please enter a valid bidding amount.</p>
+        id="biddingAmount"
+        type="number"
+        value={biddingAmount}
+        onChange={handleBidChange}
+        placeholder="Enter amount"
+        title="Enter a positive bidding amount"
+      />
+      {(biddingAmount <= 0 || biddingAmount > 10) && (
+        <p className="error-text">Bid Amount must be between 0 to 10.</p>
       )}
-      <button onClick={handleBidSubmit}>
+      <Button isDisabled={biddingAmount <= 0 && biddingAmount > 10} onClick={handleBidSubmit}>
         Start Chess Game
-      </button>
+      </Button>
     </div>
+    :
+    <Navigate to="/EE4032ChessGame/" />
   );
 };
 
