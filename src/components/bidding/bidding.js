@@ -39,7 +39,7 @@ const Bidding = ({isConnected, startedGame, setFinalBidAmount}) => {
   return (
     isConnected ?
     <div className="flex-center chessboard-container">
-      <h2>Enter your bidding amount:</h2>
+      <h2 className="heading_col">Enter your bidding amount:</h2>
       <label htmlFor="biddingAmount">Bidding Amount:</label>
       <input
         id="biddingAmount"

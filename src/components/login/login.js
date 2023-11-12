@@ -7,15 +7,15 @@ export default function Login(props) {
         return (
             <div>
                 <p>
-                    <span style={{ fontWeight: 'bold', color: 'black' }}>
+                    <span style={{ fontWeight: 'bold', color: 'white' }}>
                         No MetaMask detected.
                         <br></br>
                         Please install&nbsp;
                     </span>
-                    <span className="login-highlight" style={{ fontWeight: 'bold', color: 'black' }}>
+                    <span className="login-highlight" style={{ fontWeight: 'bold', color: 'white' }}>
                         METAMASK
                     </span>
-                    <span style={{ fontWeight: 'bold', color: 'black' }}>
+                    <span style={{ fontWeight: 'bold', color: 'white' }}>
                         &nbsp;to your browser to proceed.
                     </span>
                 </p>
@@ -25,9 +25,9 @@ export default function Login(props) {
 
     const LoginMetamask = () => {
         const fancyFontStyle = {
-            fontFamily: 'Lobster, cursive',
+            fontFamily: 'Merienda One, cursive',
             fontWeight: 'bold',
-            color: 'black',
+            color: 'white',
             fontSize: '24px', // Adjust the font size as needed
         };
 

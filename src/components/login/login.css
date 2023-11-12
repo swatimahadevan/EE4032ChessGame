@@ -12,19 +12,19 @@
 
 /* login.css */
 .login {
-  background-image: url('../../images/ches_bgpic.jpg');
+  background-image: url('C:\Users\sf314-44-r7v4\Documents\GitHub\EE4032ChessGame\src\images\game.webp');
   background-size: cover; /* This will stretch the background image to cover the entire container */
   /* Add other background properties like background-position, etc. if needed */
   
   text-align: center;
-  background-color: black;
+  
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: black;
+  color: white;
 }
 
 
