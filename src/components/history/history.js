@@ -1,6 +1,6 @@
 // History.js
 import React, { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import Chessboard from "chessboardjsx";
 import { Chess } from "chess.js";
 import { Stack, Button, Text, Spinner } from '@chakra-ui/react';
@@ -8,7 +8,7 @@ import { Stack, Button, Text, Spinner } from '@chakra-ui/react';
 import "./history.css"; // Import your CSS file
 import Loader from "../loader/loader";
 
-const History = ({getHistory, getBetAmount}) => {
+const History = ({isConnected, getHistory, getBetAmount}) => {
     const [chess] = useState(
         new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
       );
@@ -55,6 +55,7 @@ const History = ({getHistory, getBetAmount}) => {
     }
 
     return (
+        isConnected ? 
         <div className="flex-center history-container">
             <div>Amount Bet: {amountBet}</div>
             <Chessboard
@@ -67,6 +68,8 @@ const History = ({getHistory, getBetAmount}) => {
                 <Button isDisabled = {moveNum === moves.length / 2} onClick = {() => setMoveNumWrapper(moveNum + 1)}>Next</Button>
             </Stack>
         </div>
+        :
+        <Navigate to="/EE4032ChessGame/" />
     )
 }
 

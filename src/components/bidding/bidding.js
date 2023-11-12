@@ -1,13 +1,13 @@
 // Bidding.js
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import Chessboard from "chessboardjsx";
 import Cookies from "js-cookie";
 
 import "./bidding.css"; // Import your CSS file
 import { Button } from "@chakra-ui/react";
 
-const Bidding = ({startedGame, setFinalBidAmount}) => {
+const Bidding = ({isConnected, startedGame, setFinalBidAmount}) => {
   const [biddingAmount, setBiddingAmount] = useState("");
   const navigate = useNavigate();
 
@@ -37,6 +37,7 @@ const Bidding = ({startedGame, setFinalBidAmount}) => {
   }, [startedGame]);
 
   return (
+    isConnected ?
     <div className="flex-center chessboard-container">
       <h2>Enter your bidding amount:</h2>
       <label htmlFor="biddingAmount">Bidding Amount:</label>
@@ -55,6 +56,8 @@ const Bidding = ({startedGame, setFinalBidAmount}) => {
         Start Chess Game
       </Button>
     </div>
+    :
+    <Navigate to="/EE4032ChessGame/" />
   );
 };
 

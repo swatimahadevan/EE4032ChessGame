@@ -1,7 +1,5 @@
 import './login.css';
 import '../../global.css';
-import logo from '../../images/logo.svg';
-import Cookies from 'js-cookie';
 
 export default function Login(props) {
 

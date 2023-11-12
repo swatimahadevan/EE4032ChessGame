@@ -1,5 +1,5 @@
 import {Routes, Route} from "react-router-dom";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, Navigate} from "react-router-dom";
 import {useState, useEffect} from 'react';
 import {ethers} from 'ethers';
 import Web3 from "web3";
@@ -234,6 +234,12 @@ export default function App() {
         )
     }
 
+    const BiddingDisplay = () => {
+        return (
+            <Bidding isConnected={isConnected} startedGame={startedGame} setFinalBidAmount={setFinalBidAmount}/>
+        )
+    }
+
     const ChessBoardDisplay = () => {
         return (
             <ChessBoard
@@ -243,13 +249,20 @@ export default function App() {
                 move = {move}
                 endGame = {endGame}
                 restartGame = {restartGame}
+                setStartedGame = {setStartedGame}
             />
         )
     }
 
     const HistoryDisplay = () => {
         return (
-            <History getHistory={getHistoryMoves} getBetAmount={getBetAmount}/>
+            <History isConnected={isConnected} getHistory={getHistoryMoves} getBetAmount={getBetAmount}/>
+        )
+    }
+
+    const AdminPortalDisplay = () => {
+        return (
+            <AdminPortal isConnected={isConnected} user={ethereum.selectedAddress} deposit={deposit} withdraw={withdraw} getBalance={getBalance}/>
         )
     }
 
@@ -260,10 +273,10 @@ export default function App() {
                 <Routes>
                     <Route path="/EE4032ChessGame/" element={<Login isHaveMetamask = {haveMetamask} connectTo = {connectWallet} />} />
                     <Route path = "/EE4032ChessGame/profile" element = {<ProfileDisplay/>}></Route>
-                    <Route path = "/EE4032ChessGame/bidding" element = {<Bidding startedGame={startedGame} setFinalBidAmount={setFinalBidAmount}/>}></Route>
+                    <Route path = "/EE4032ChessGame/bidding" element = {<BiddingDisplay/>}></Route>
                     <Route path = "/EE4032ChessGame/chessboard" element = {<ChessBoardDisplay />}></Route>
                     <Route path = "/EE4032ChessGame/history" element = {<HistoryDisplay/>}></Route>
-                    <Route path = "/EE4032ChessGame/adminportal" element = {<AdminPortal user={ethereum.selectedAddress} deposit={deposit} withdraw={withdraw} getBalance={getBalance}/>}></Route>
+                    <Route path = "/EE4032ChessGame/adminportal" element = {<AdminPortalDisplay/>}></Route>
                 </Routes>
             </div>
             </ChakraProvider>

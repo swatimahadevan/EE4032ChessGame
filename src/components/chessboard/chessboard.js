@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import Chessboard from "chessboardjsx";
 import { Chess } from "chess.js";
-import { Navigate } from "react-router-dom";
-import { Spinner } from '@chakra-ui/react'
 import "./chessboard.css"; // Import your CSS file
 import Loader from "../loader/loader";
+import { useNavigate, Navigate } from "react-router-dom";
 
 const ChessBoard = (props) => {
-  const { isConnected, startedGame, balance, move, endGame, restartGame } = props;
+  const { isConnected, startedGame, balance, move, endGame, restartGame, setStartedGame } = props;
 
   if (!startedGame) {
     return (
@@ -24,12 +23,13 @@ const ChessBoard = (props) => {
       move={move}
       endGame={endGame}
       restartGame={restartGame}
+      setStartedGame={setStartedGame}
     />
   );
 };
 
 const ChessBoardInternal = (props) => {
-  const {move, endGame, restartGame} = props
+  const {isConnected, move, endGame, restartGame, setStartedGame} = props
   const [chess] = useState(
     new Chess("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1")
   );
@@ -42,6 +42,8 @@ const ChessBoardInternal = (props) => {
   const [gameStatus, setGameStatus] = useState("");
   const [winner, setWinner] = useState(null);
   const [errorMessage, setErrorMessage] = useState("");
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (chess.isGameOver()) {
@@ -133,9 +135,9 @@ const ChessBoardInternal = (props) => {
       if (chess.isGameOver()) {
         const winner = chess.turn() === "w" ? "Black" : "White";
         const isPlayerWin = winner === "White"
-        endGame(isPlayerWin)
         setWinner(winner);
         setGameStatus(`Checkmate! ${winner} wins!`);
+        await endGame(isPlayerWin)
       } else {
         setTimeout(async() => {
           const moves = chess.moves();
@@ -230,7 +232,10 @@ const ChessBoardInternal = (props) => {
     setGameStatus("");
     setWinner(null);
     setCapturedPieces({});
+    setStartedGame(false)
+    localStorage.removeItem("chessFen");
     await restartGame()
+    navigate("/EE4032ChessGame/bidding")
   };
 
   const handleQuitGame = async () => {
@@ -238,11 +243,13 @@ const ChessBoardInternal = (props) => {
   };
   
   return (
+    isConnected ? 
     <div className="flex-center chessboard-container">
     <h1>Play Against AI</h1>
     <div className="game-status">{gameStatus}</div>
     {winner && <div className="winner">Winner: {winner}</div>}
     {errorMessage && <div className="error-message">{errorMessage}</div>}
+    <div className="warning-message">Warning: You will lose your money bet if you restart the game before it ends</div>
     <div>
       <button className="new-game-button" onClick={async() => await handleNewGame()}>New Game</button>
     </div>
@@ -264,6 +271,8 @@ const ChessBoardInternal = (props) => {
         onSquareClick={(square) => handleSquareClick(square)}
       />
     </div>
+    :
+    <Navigate to="/EE4032ChessGame/" />
   );
 };
 
