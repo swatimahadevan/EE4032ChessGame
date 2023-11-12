@@ -15,6 +15,7 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Bidding from './components/bidding/bidding';
 import AdminPortal from "./components/adminportal/adminportal";
+import { ADMINS } from "./constants/admin"
 
 export default function App() {
     const [haveMetamask, setHaveMetamask] = useState(true);     // check if the browser has MetaMask installed. 
@@ -48,8 +49,6 @@ export default function App() {
     // const web3 = new Web3(Web3.givenProvider || "http://localhost:7545");
     const web3 = new Web3(ethereum);
     const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
-
-    const SERVER_ADDRESS = "0xd5342e25cb392b5ff20e0bdade80335bd771cfae"
 
 
 ////// connect to MetaMask. 
@@ -125,7 +124,7 @@ export default function App() {
                 from: ethereum.selectedAddress,
             });
 
-            // console.log(result);
+            console.log(result);
         } catch (error) {
             console.error(error);
         }
@@ -137,7 +136,7 @@ export default function App() {
                 from: ethereum.selectedAddress
             });
 
-            // console.log(result);
+            console.log(result);
             return result;
         } catch (error) {
             console.error(error);
@@ -150,7 +149,7 @@ export default function App() {
                 from: ethereum.selectedAddress
             });
 
-            // console.log(result);
+            console.log(result);
             return result;
         } catch (error) {
             console.error(error);
@@ -163,7 +162,7 @@ export default function App() {
                 from: ethereum.selectedAddress,
             })
 
-            // console.log(result);
+            console.log(result);
             return result;
         } catch (error) {
             console.error(error);
@@ -173,8 +172,7 @@ export default function App() {
     const endGame = async (isPlayerWin) => {
         try {
             const result = await contract.methods.ends(ethereum.selectedAddress, isPlayerWin).send({
-                from: SERVER_ADDRESS,
-                value: finalBidAmount,
+                from: ADMINS[0],
             })
 
             console.log(result);

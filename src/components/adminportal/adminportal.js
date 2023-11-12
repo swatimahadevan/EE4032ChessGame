@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { Button, Input, Stack, Spinner } from '@chakra-ui/react'
+import { Button, Input, Stack } from '@chakra-ui/react'
 import "./adminportal.css"; // Import your CSS file
 import Loader from "../loader/loader";
-
-const ADMINS = ["0xd5342e25cb392b5ff20e0bdade80335bd771cfae"]
+import { ADMINS } from "../../constants/admin"
 
 const AdminPortal = ({user, deposit, withdraw, getBalance}) => {
     const [isAdmin, setIsAdmin] = useState(false);
