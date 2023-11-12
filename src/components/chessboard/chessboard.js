@@ -188,12 +188,7 @@ const ChessBoardInternal = (props) => {
   };
 
   const formatMovesString = (moves) => {
-    // Combine player's and computer's moves in alternating order
-    const formattedMoves = [];
-    for (let i = 0; i < Math.min(moves.length, 10); i++) {
-      formattedMoves.push(moves[i]);
-    }
-    return formattedMoves.join(", ");
+    return moves.join(", ");
   };
 
   const getBestMove = () => {
