@@ -4,6 +4,7 @@ import { Chess } from "chess.js";
 import { Navigate } from "react-router-dom";
 import { Spinner } from '@chakra-ui/react'
 import "./chessboard.css"; // Import your CSS file
+import Loader from "../loader/loader";
 
 const ChessBoard = (props) => {
   const { isConnected, startedGame, balance, move, endGame, restartGame } = props;
@@ -11,13 +12,7 @@ const ChessBoard = (props) => {
   if (!startedGame) {
     return (
       <div className="flex-center chessboard-container">
-        <Spinner
-          thickness='4px'
-          speed='0.65s'
-          emptyColor='gray.200'
-          color='blue.500'
-          size='xl'
-        />
+        <Loader/>
       </div>
     )
   }

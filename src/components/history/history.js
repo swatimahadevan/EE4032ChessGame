@@ -6,6 +6,7 @@ import { Chess } from "chess.js";
 import { Stack, Button, Text, Spinner } from '@chakra-ui/react';
 
 import "./history.css"; // Import your CSS file
+import Loader from "../loader/loader";
 
 const History = ({getHistory, getBetAmount}) => {
     const [chess] = useState(
@@ -48,13 +49,7 @@ const History = ({getHistory, getBetAmount}) => {
     if (amountBet == null) {
         return (
             <div className="flex-center history-container">
-                <Spinner
-                    thickness='4px'
-                    speed='0.65s'
-                    emptyColor='gray.200'
-                    color='blue.500'
-                    size='xl'
-                />
+                <Loader/>
             </div>
         )
     }

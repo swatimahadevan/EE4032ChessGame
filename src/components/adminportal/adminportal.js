@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button, Input, Stack, Spinner } from '@chakra-ui/react'
 import "./adminportal.css"; // Import your CSS file
+import Loader from "../loader/loader";
 
 const ADMINS = ["0xd5342e25cb392b5ff20e0bdade80335bd771cfae"]
 
@@ -41,13 +42,7 @@ const AdminPortal = ({user, deposit, withdraw, getBalance}) => {
     if (isLoading) {
         return (
             <div className="admin-container">
-                <Spinner
-                    thickness='4px'
-                    speed='0.65s'
-                    emptyColor='gray.200'
-                    color='blue.500'
-                    size='xl'
-                />
+                <Loader/>
             </div>
         )
     }
