@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Input, Stack, Flex } from '@chakra-ui/react'
+import { Button, Input, Stack, Spinner } from '@chakra-ui/react'
 import "./adminportal.css"; // Import your CSS file
 
 const ADMINS = ["0xd5342e25cb392b5ff20e0bdade80335bd771cfae"]
@@ -9,6 +9,7 @@ const AdminPortal = ({user, deposit, withdraw, getBalance}) => {
     const [balance, setBalance] = useState(0);
     const [withdrawAmount, setWithdrawAmount] = useState(0);
     const [depositAmount, setDepositAmount] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         setIsAdmin(ADMINS.includes(user))
@@ -16,21 +17,39 @@ const AdminPortal = ({user, deposit, withdraw, getBalance}) => {
 
     useEffect(() => {
         const getInfo = async() => {
-            if (isAdmin) {
+            if (isAdmin && !isLoading) {
                 const bal = await getBalance()
                 setBalance(Number(bal))
             }
         }
 
         getInfo();
-    }, [isAdmin])
+    }, [isAdmin, isLoading])
 
     const withdrawEther = async() => {
+        setIsLoading(true)
         await withdraw(withdrawAmount);
+        setIsLoading(false)
     }
 
     const depositEther = async() => {
+        setIsLoading(true)
         await deposit(depositAmount);
+        setIsLoading(false)
+    }
+
+    if (isLoading) {
+        return (
+            <div className="admin-container">
+                <Spinner
+                    thickness='4px'
+                    speed='0.65s'
+                    emptyColor='gray.200'
+                    color='blue.500'
+                    size='xl'
+                />
+            </div>
+        )
     }
 
     return (
@@ -47,7 +66,7 @@ const AdminPortal = ({user, deposit, withdraw, getBalance}) => {
                     placeholder='Withdraw Amount'
                     size='sm'
                 />
-                <Button isDisabled={withdrawAmount > balance} onClick={withdrawEther}>Withdraw</Button>
+                <Button isDisabled={withdrawAmount > balance} onClick={async() => await withdrawEther()}>Withdraw</Button>
             </Stack>
             <Stack direction="row" spacing={8} width={700}>
                 <Input
@@ -56,7 +75,7 @@ const AdminPortal = ({user, deposit, withdraw, getBalance}) => {
                     placeholder='Deposit Amount'
                     size='sm'
                 />
-                <Button onClick={depositEther}>Deposit</Button>
+                <Button onClick={async() => await depositEther()}>Deposit</Button>
             </Stack>
         </div>
     )
