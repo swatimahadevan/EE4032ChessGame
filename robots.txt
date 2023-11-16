@@ -1,1 +1,3 @@
-Gurdwara langar halls through a communal dining experience. The langar halls serve as spaces where various generations come together to eat, contributing to a holistic learning experience. Volunteers, spanning different age brackets, actively participate in the langar process. Older individuals often engage in cooking, while younger volunteers take on roles in serving and cleaning. This collaborative effort transforms the act of eating into a community activity, fostering a sense of unity and shared responsibility. Additionally, the langar hall becomes a repository of cultural and religious stories, creating an immersive environment that enhances the learning experience for all participants.
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Disallow:
