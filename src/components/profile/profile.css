@@ -1,0 +1,148 @@
+.project-card {
+  /* Additional styling if needed */
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container {
+  flex: 0 0 auto;
+  height: 1000px; /* Set a fixed height for the logo container */
+  margin-right: 20px; /* Adjust margin as needed */
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  max-height: 100%; /* Set the logo's max height to fill the container */
+  width: auto;
+}
+
+.profile-details {
+  flex: 1;
+}
+
+/* Additional styling for profile details */
+.profile-label {
+  /* Styles for profile label */
+}
+
+.global-message {
+  /* Styles for global message */
+}
+
+
+.global-message {
+  /* Styles for global message */
+}
+
+/* Add these styles to your stylesheet */
+.profile-details {
+  color: white;
+}
+
+.profile-label {
+  font-size: 24px; /* Adjust the size as needed */
+  font-weight: bold;
+}
+
+
+/* CSS Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styles */
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh; /* Ensure the body takes full viewport height */
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+}
+.project-card {
+  /* Additional styling if needed */
+}
+
+.profile-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-container {
+  flex: 0 0 auto;
+  margin-right: 20px; /* Adjust margin as needed */
+}
+
+.profile-details {
+  flex: 1;
+}
+
+/* Additional styling for profile details */
+.profile-label {
+  /* Styles for profile label */
+}
+
+.global-message {
+  /* Styles for global message */
+}
+
+
+.profile {
+  background-color: black;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-section {
+  margin-bottom: 20px; /* Adjust the margin as needed to reduce space */
+}
+
+.logo-and-details {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white; /* Set font color to white */
+}
+
+.logo-container {
+  width: 100%;
+  max-width: 200px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.profile-account {
+  font-size: 25px;
+  text-align: center;
+  padding: 10px;
+  color: white; /* Set font color to white */
+}
+
+.global-message {
+  font-weight: bold;
+  color: white; /* Set font color to white */
+}
+
+.global-toolbar-section {
+  margin-top: 20px; /* Adjust the margin as needed to reduce space */
+  color: white; /* Set font color to white */
+}
